@@ -18,8 +18,9 @@ Windows:
 import pandas as pd
 import numpy as np
 
-health_file = #input the filepath to your health data here
-df = pd.read_csv(health_file)
+import os 
+
+df = pd.read_csv(os.getcwd() + "/Health Data.csv")
 
 
 print("-"*15 + "information on your dataset" + "-"*15)
