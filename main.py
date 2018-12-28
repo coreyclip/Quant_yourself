@@ -23,10 +23,18 @@ import os
 df = pd.read_csv(os.getcwd() + "/Health Data.csv")
 
 
-print("-"*15 + "information on your dataset" + "-"*15)
+print("information on your dataset")
 df.info()
-print("-"*15 + "first 5 rows of the data" + "-"*15)
+print("first 5 rows of the data")
 print(df.head(5))
+
+descriptive_stats = df.describe()
+correlation_table = df.corr()
+
+print("Descriptive Statistics")
+print(descriptive_stats)
+
+print(correlation_table)
 
 '''
 you can adjust what our machine learning model tries to predict by changing
