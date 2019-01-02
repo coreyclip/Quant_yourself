@@ -141,26 +141,24 @@ press enter and you should see the following being read out
 yourcomputer:Quant_yourself$ python main.py
 information on your dataset
 <class 'pandas.core.frame.DataFrame'>
-RangeIndex: 510 entries, 0 to 509
-Data columns (total 8 columns):
-Unnamed: 0                510 non-null int64
-Unnamed: 0.1              510 non-null int64
-Start                     510 non-null object
-Finish                    510 non-null object
-Distance (mi)             510 non-null float64
-Steps (count)             510 non-null float64
-Weight (lb)               510 non-null float64
-Dietary Calories (cal)    510 non-null float64
-dtypes: float64(4), int64(2), object(2)
-memory usage: 32.0+ KB
+RangeIndex: 865 entries, 0 to 864
+Data columns (total 7 columns):
+Start                     865 non-null object
+Finish                    865 non-null object
+Active Calories (kcal)    865 non-null float64
+Dietary Calories (cal)    865 non-null float64
+Distance (mi)             865 non-null float64
+Steps (count)             865 non-null float64
+Weight (lb)               865 non-null float64
+dtypes: float64(5), object(2)
+memory usage: 47.4+ KB
 first 5 rows of the data
-   Unnamed: 0  Unnamed: 0.1          ...           Weight (lb) Dietary Calories (cal)
-0           0             0          ...                 197.6                 2240.9
-1           1             1          ...                 200.8                 2319.7
-2           2             2          ...                 200.4                 2369.7
-3           3             3          ...                 201.6                 2188.8
-4           4             4          ...                 202.9                 2555.0
-
+               Start             Finish     ...       Steps (count)  Weight (lb)
+0  15-Aug-2016 00:00  16-Aug-2016 00:00     ...             25305.0          0.0
+1  16-Aug-2016 00:00  17-Aug-2016 00:00     ...             12475.0          0.0
+2  17-Aug-2016 00:00  18-Aug-2016 00:00     ...             14898.0          0.0
+3  18-Aug-2016 00:00  19-Aug-2016 00:00     ...              6656.0          0.0
+4  19-Aug-2016 00:00  20-Aug-2016 00:00     ...              6886.0          0.0
 
 ```
 If you got something similar to the above, then congradulations you just ran your first python script!!
@@ -215,22 +213,24 @@ When you run this script from the terminal, you should now have output that will
 
 ```python
 Descriptive Statistics
-       Distance (mi)  Steps (count)  Weight (lb)  Dietary Calories (cal)
-count     510.000000     510.000000   510.000000              510.000000
-mean        3.732590    9558.945098   202.065882             2486.992941
-std         2.517266    6084.983156     1.705974              254.538844
-min         0.020139      56.000000   196.200000             1696.500000
-25%         1.731280    4741.000000   201.000000             2313.775000
-50%         3.182276    8140.379652   202.400000             2478.300000
-75%         5.236160   13392.750000   203.200000             2652.575000
-max        14.480813   32873.096151   206.700000             3283.600000
-Correlation Table
-                        Distance (mi)  Steps (count)  Weight (lb)  Dietary Calories (cal)
-Distance (mi)                1.000000       0.990703    -0.827025               -0.070965
-Steps (count)                0.990703       1.000000    -0.833593               -0.069348
-Weight (lb)                 -0.827025      -0.833593     1.000000                0.608575
-Dietary Calories (cal)      -0.070965      -0.069348     0.608575                1.000000
--
+       Active Calories (kcal)  Dietary Calories (cal)  Distance (mi)  Steps (count)  Weight (lb)
+count                   865.0            8.650000e+02     865.000000     865.000000   865.000000
+mean                      0.0            3.808977e+04       3.217581    8109.345665     6.620182
+std                       0.0            2.423989e+05       2.280001    5513.771349    36.219423
+min                       0.0            0.000000e+00       0.000000       0.000000     0.000000
+25%                       0.0            0.000000e+00       1.587784    4212.000000     0.000000
+50%                       0.0            0.000000e+00       2.528945    6545.494470     0.000000
+75%                       0.0            0.000000e+00       4.355165   10733.765974     0.000000
+max                       0.0            3.237495e+06      14.516899   33195.107360   208.600000
+                        Active Calories (kcal)  Dietary Calories (cal)     ...       Steps (count)  Weight (lb)
+Active Calories (kcal)                     NaN                     NaN     ...                 NaN          NaN
+Dietary Calories (cal)                     NaN                1.000000     ...           -0.059322     0.331208
+Distance (mi)                              NaN               -0.056050     ...            0.988516    -0.076882
+Steps (count)                              NaN               -0.059322     ...            1.000000    -0.093157
+Weight (lb)                                NaN                0.331208     ...           -0.093157     1.000000
+
+[5 rows x 5 columns]
+
 
 
 ```
@@ -249,12 +249,27 @@ The columns list out the columns we have in our dataset while the rows store sta
 
 You can see the documenation for .describe() [here](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.describe.html)
 
+After our stats output we have our correlations table. Correlation tables are IMO an essential part of data exploration. I almost always use one as a guide for whatever next steps I take in performing data analysis and when properly visualized they can be great analytical products in their own right.
+
+A correlation table is typically presented as a matrix with identical labels on both the columns and rows. The numbers that make up the matrix are the correlation values between the corresponding row and column labels. Correlation essentially is the degree in which two phenomena appear to act in concert. If a correlation is a positive number then we can say that when **A** increases **B** also typically increases. With my dataset Step Counts and Distance in miles are almost perfectly correlated, which makes sense. We can also see that my weight is correlated positively with Dietary Calories, though to a weaker degree. 
+
+A negative correlation means that as **A** goes up **B** goes down and vice versa. With my dataset, weight is negatively correlated with steps and miles traveled. And it appears that my step count is slightly more negatively correlated with my weight than miles walked, I guess short strides are better than long strides in a very granular sense.
+
+But looking at my table I noticed that I have only NaNs for my Active Calories column. NaN is python shorthand for not a number and the **.corr** method will put in NaNs where correlations cannot be made. The most plausible reason for this is that I didn't actually log any Active Calories, but QT Access had outputted it none the less since my smartphone was trying to track it. In the end my correlation table is simply cluttered by this column. Also looking at my 
+
+
+## Cleaning up the slop
+While correlation tables are useful, they have limitations in a scientific sense. But from glancing at my data it's clear that my raw data can be cleaned up a bit to get some more meaningful insights into what I have going on here. I'm not sure what your health data looks like, perhaps you're extremely fastidious and have kept a dutiful log of ever calorie you consumed. If not this next session will go over just a few data wrangling techniques that can make our correlation tables a bit more accurate.
+
+the correlation values between the corresponding row and column labels. Correlation essentially is the degree in which two phenomena appear to act in concert. If a correlation is a positive number then we can say that when **A** increases **B** also increases, on average, by the degree of the correlation value. With my dataset Step Counts and Distance in miles 
+
 After our stats output we have our correlations table. Correlation tables are IMO an essential part of data exploration. I almost always use one as a guide for whatever next steps I take in performing data analysis and when properly visualized they can be great analytical products in their own right. A correlation table is typically presented as a matrix with identical labels on both the columns and rows. The numbers that make up the matrix are the correlation values between the corresponding row and column labels. Correlation essentially is the degree in which two phenomena appear to act in concert. If a correlation is a positive number then we can say that when **A** increases **B** also increases, on average, by the degree of the correlation value. With my dataset Step Counts and Distance in miles  
 
 
 ## Data Exploration and Cleaning in Jupyter Notebooks
 
-While Jupyter notebooks were conceived of as a portable means of combining code and written research, I find them to be an excellent environment for exploring data and toying around with different data engineering operations. You can load a datasource in one cell and then write any number of cells that perform different operations on this datasource without having to go into our terminal and rerun different versions of our program. I also use the markdown cells to write nicely formatted notes about what each cell does or store links to online resources that are relevant to what ever I'm doing with a certain project. In this next section we'll go over the basics of running jupyter notebooks by doing some basic data processing. 
+While Jupyter notebooks were conceived of as a portable means of combining code and written research, I find them to be an excellent environment for exploring data and toying around with different data engineering operations. You can load a datasource in one cell and then write any number of cells that perform different operations on this
+ datasource without having to go into our terminal and rerun different versions of our program. I also use the markdown cells to write nicely formatted notes about what each cell does or store links to online resources that are relevant to what ever I'm doing with a certain project. In this next section we'll go over the basics of running jupyter notebooks by doing some basic data processing. 
 
 * Firing up Jupyter Lab
 * Filling missing values
