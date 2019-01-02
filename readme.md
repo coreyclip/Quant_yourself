@@ -249,4 +249,14 @@ The columns list out the columns we have in our dataset while the rows store sta
 
 You can see the documenation for .describe() [here](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.describe.html)
 
-After our stats output we have our correlations table. Correlation tables are IMO an essential part of data exploration. I almost always use one as a guide for whatever next steps I take in performing data analysis and when properly visualized they can be great analytical products in their own right. A correlation table is typically presented as a matrix with identical labels on both the columns and rows. The numbers that make up the matrix are the correlation values between the corresponding row and column labels. Correlation essentially is the degree in which two phenomena appear to act in concert. If a correlation is a positive number then we can say that when **A** increases **B** also increases, on average, by the degree of the correlation value. With my dataset Step Counts and Distance in miles 
+After our stats output we have our correlations table. Correlation tables are IMO an essential part of data exploration. I almost always use one as a guide for whatever next steps I take in performing data analysis and when properly visualized they can be great analytical products in their own right. A correlation table is typically presented as a matrix with identical labels on both the columns and rows. The numbers that make up the matrix are the correlation values between the corresponding row and column labels. Correlation essentially is the degree in which two phenomena appear to act in concert. If a correlation is a positive number then we can say that when **A** increases **B** also increases, on average, by the degree of the correlation value. With my dataset Step Counts and Distance in miles  
+
+
+## Data Exploration and Cleaning in Jupyter Notebooks
+
+While Jupyter notebooks were conceived of as a portable means of combining code and written research, I find them to be an excellent environment for exploring data and toying around with different data engineering operations. You can load a datasource in one cell and then write any number of cells that perform different operations on this datasource without having to go into our terminal and rerun different versions of our program. I also use the markdown cells to write nicely formatted notes about what each cell does or store links to online resources that are relevant to what ever I'm doing with a certain project. In this next section we'll go over the basics of running jupyter notebooks by doing some basic data processing. 
+
+* Firing up Jupyter Lab
+* Filling missing values
+* splitting up our dataframes 
+* converting to markdown or html see: https://www.blog.pythonlibrary.org/2018/10/09/how-to-export-jupyter-notebooks-into-other-formats/ 
