@@ -59,19 +59,19 @@ def main(file):
     front_page.autofit('c')
     # and they can be selected by name
     graphs_page = wb.sheets['Graphs']
-    graphs_page.range('A1:Z300').clear()
+    graphs_page.range('A1:Z300').clear_contents()
 
     sns.set_style("darkgrid")
     steps = df['Steps (count)'].dropna()
     steps_fig = sns.distplot(steps).get_figure()
     # since version 0.5
-    xw.Plot(steps_fig).show('step counts', sheet='graphs_page')
-    # steps_fig.savefig('step count distribution')
-    # try:
-    #     graphs_page.pictures.add(steps_fig, name='step count distribution')
-    # except:
-    #     # if the graph already exists use this syntax
-    #     graphs_page.pictures.add(steps_fig, update='step count distribution')
+    # xw.Plot(steps_fig).show('step counts', sheet='graphs_page')
+    steps_fig.savefig('step count distribution')
+    try:
+        graphs_page.pictures.add(steps_fig, name='step count distribution')
+    except:
+        # if the graph already exists use this syntax
+        graphs_page.pictures.add(steps_fig, update='step count distribution', name='step count distribution')
 
 
 

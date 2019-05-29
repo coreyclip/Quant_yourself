@@ -1,7 +1,13 @@
-Sub Verification_Report()
+Sub SampleCall()
+    mymodule = Left(ThisWorkbook.Name, (InStrRev(ThisWorkbook.Name, ".", -1, vbTextCompare) - 1))
+    RunPython ("import " & mymodule & ";" & mymodule & ".hello_xlwings()")
+End Sub
+
+
+Sub Analyze()
     'FILE-SIDE PREPARATION
     'Returns file path string or boolean false
-    vFile = Application.GetOpenFilename(FileFilter:="Excel Workbooks (*.XLSX), *.XLSX", Title:="Select File To Be Opened")
+    vFile = Application.GetOpenFilename(Title:="Select File To Be Opened")
     
     'Error handling; easier to handle out of getWorkbook
     If vFile = False Then
@@ -13,7 +19,7 @@ Sub Verification_Report()
         
     End If
     
-    mymodule = Left(ThisWorkbook.name, (InStrRev(ThisWorkbook.name, ".", -1, vbTextCompare) - 1))
+    mymodule = Left(ThisWorkbook.Name, (InStrRev(ThisWorkbook.Name, ".", -1, vbTextCompare) - 1))
     
     RunPython ("import " & mymodule & "; " & mymodule & ".main(" & sFile & ")")
 
